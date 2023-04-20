@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    open_weather_api_key: 'api_key_here'
+    open_weather_api_base_url: 'https://api.example.com'
+    open_weather_api_endpoints:
+        weather-by-coordinates: '/weather-by-coordinates'
+        weather-by-zipcode: '/weather-by-zipcode'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +27,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\OpenWeatherService:
+        arguments:
+            $httpClient: '@http_client'
+            $apiKey: '%open_weather_api_key%'
+            $apiBaseUrl: '%open_weather_api_base_url%'
+            $apiEndpoints: '%open_weather_api_endpoints%'
+

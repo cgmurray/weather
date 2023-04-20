@@ -1,50 +1,71 @@
-<h1 align="center"><a href="https://api-platform.com"><img src="https://api-platform.com/logo-250x250.png" alt="API Platform"></a></h1>
+# Gilded Rose Inn -- Weather Service
 
-API Platform is a next-generation web framework designed to easily create API-first projects without compromising extensibility
-and flexibility:
+This is a simple weather service for the Gilded Rose inn. The service provides basic weather information like current temperature, min/max temperature for the day, and humidity. It uses an external weather API to fetch the data.
 
-* Design your own data model as plain old PHP classes or [**import an existing ontology**](https://api-platform.com/docs/schema-generator).
-* **Expose in minutes a hypermedia REST or a GraphQL API** with pagination, data validation, access control, relation embedding,
-  filters and error handling...
-* Benefit from Content Negotiation: [GraphQL](https://api-platform.com/docs/core/graphql/), [JSON-LD](https://json-ld.org), [Hydra](https://hydra-cg.com),
-  [HAL](https://github.com/mikekelly/hal_specification/blob/master/hal_specification.md), [JSON:API](https://jsonapi.org/), [YAML](https://yaml.org/), [JSON](https://www.json.org/), [XML](https://www.w3.org/XML/) and [CSV](https://www.ietf.org/rfc/rfc4180.txt) are supported out of the box.
-* Enjoy the **beautiful automatically generated API documentation** ([OpenAPI](https://api-platform.com/docs/core/openapi/)).
-* Add [**a convenient Material Design administration interface**](https://api-platform.com/docs/admin) built with [React](https://reactjs.org/)
-  without writing a line of code.
-* **Scaffold fully functional Progressive-Web-Apps and mobile apps** built with [Next.js](https://api-platform.com/docs/client-generator/nextjs/) (React),
-[Nuxt.js](https://api-platform.com/docs/client-generator/nuxtjs/) (Vue.js) or [React Native](https://api-platform.com/docs/client-generator/react-native/)
-thanks to [the client generator](https://api-platform.com/docs/client-generator/) (a Vue.js generator is also available).
-* Install a development environment and deploy your project in production using **[Docker](https://api-platform.com/docs/distribution)**
-and [Kubernetes](https://api-platform.com/docs/deployment/kubernetes).
-* Easily add **[OAuth](https://oauth.net/) authentication**.
-* Create specs and tests with **[a developer friendly API testing tool](https://api-platform.com/docs/distribution/testing/)**.
+## Setup
 
-[![GitHub Actions](https://github.com/api-platform/core/workflows/CI/badge.svg)](https://github.com/api-platform/core/actions?workflow=CI)
-[![Codecov](https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg)](https://codecov.io/gh/api-platform/core/branch/master)
+### Prerequisites
+* Docker for Mac (or Windows)
 
-The official project documentation is available **[on the API Platform website](https://api-platform.com)**.
+### Installation
+1. Clone the repository.
+```bash
+git clone https://github.com/cgmurray/weather.git
+cd weather
+docker compose pull --include-deps
+```
 
-API Platform embraces open web standards and the
-[Linked Data](https://www.w3.org/standards/semanticweb/data) movement. Your API will automatically expose structured data.
-It means that your API Platform application is usable **out of the box** with technologies of
-the semantic web.
+## Running the Application
+1. Run the docker script
+```
+docker compose up -d
+```
 
-It also means that **your SEO will be improved** because **[Google leverages these formats](https://developers.google.com/search/docs/guides/intro-structured-data)**.
+The application will be available at `http://localhost/docs/api/`.
 
-Last but not least, the server component of API Platform is built on top of the [Symfony](https://symfony.com) framework,
-while client components leverage [React](https://reactjs.org/) ([Vue.js](https://vuejs.org/) flavors are also available).
-It means that you can:
+## Endpoints
+* GET `/weather/coordinates?lat={latitude}&lon={longitude}`
+* GET `/weather/zip?zip={zipCode}`
 
-* Use **thousands of Symfony bundles and React components** with API Platform.
-* Integrate API Platform in **any existing Symfony, React or Vue application**.
-* Reuse **all your Symfony and JavaScript skills**, benefit of the incredible amount of documentation available.
-* Enjoy the popular [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
-  you can use the data provider you want, including but not limited to MongoDB and Elasticsearch)
+## Access Keys
 
-## Install
+Information on where to place your access keys for the third-party weather services.
 
-[Read the official "Getting Started" guide](https://api-platform.com/docs/distribution).
+## System Overview
 
-## Credits
+The system is built using API Platform, including the Symfony framework. It consists of a single controller with two actions, handling requests with either latitude/longitude or zip code query parameters. The controller uses a weather service to fetch the weather data from the third-party API (OpenWeatherMap.org) and returns a JSON response with the required information.
 
-Created by [Kévin Dunglas](https://dunglas.fr). Commercial support available at [Les-Tilleuls.coop](https://les-tilleuls.coop).
+The weather service is designed to be easily extensible, so other weather providers can be added in the future.
+
+## References
+
+* ChatGPT - GPT-4 model
+* API Platform - api-platform.com
+
+## Third-Party Libraries and Tools
+* API Platform reference application
+* Symfony http-client
+
+## Time Spent
+
+* 3 hours
+
+## Software Design and Best Practices
+If I had unlimited time to spend on this project, I would:
+
+1. Add support for more weather providers and implement a strategy to fallback between them in case of failures.
+2. Write unit and functional tests to ensure the correctness of the application.
+3. Implement caching for the weather data to reduce the number of requests to the third-party APIs.
+4. Add proper error handling and user-friendly error messages.
+5. Improve input validation for query parameters.
+6. Implement additional features such as extended forecasts, historical data, etc.
+7. Add API authentication to secure the service.
+
+## Software Design and Best Practices
+With more time, I would implement the following software design and best practices:
+
+1. Dependency Injection: Ensure all dependencies are injected, making the code more modular and testable.
+2. SOLID Principles: Follow SOLID principles to ensure a well-structured, maintainable, and scalable application.
+3. Design Patterns: Utilize appropriate design patterns for better code organization and reusability.
+4. Code Documentation: Add more comprehensive inline documentation for better understanding and maintainability.
+5. Error Handling and Logging: Implement proper error handling, logging, and monitoring for a more robust application.
